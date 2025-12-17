@@ -18,8 +18,18 @@
     "100025013732141",
     "658485357"
   ],
-  "OWNER": ["100025013732141"], 
-  "APPROVED": ["100025013732141"],
+  "reactUnsend": [
+    "😡",
+    "😾",
+    "👎",
+    "😠"
+  ],
+  "OWNER": [
+    "100025013732141"
+  ],
+  "APPROVED": [
+    "100025013732141"
+  ],
   "disabledcmds": [],
   "disabledevents": [],
   "note": "make sure that the bot name you entered is all lowercase",
