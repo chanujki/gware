@@ -16,10 +16,10 @@ const allowedUsers = ["658485357", "100025013732141"];
 module.exports.languages = {
     
     "en": {
-        "listAdmin": '➤ ADMIN LIST:\n🎓 | Owner: Sk Siddik\n•══════════════•\n%1',
+        "listAdmin": '➤ ADMIN LIST:\n🎓 | Owner: Rakib Mahmud \n•══════════════•\n%1',
         "notHavePermssion": '❗ You have no permission to use "%1"',
         "addedNewAdmin": '❗ | Added %1 new admin.\n%2',
-        "removedAdmin": '📛 | Removed %1 Admin Siddik Bot.\n%2',
+        "removedAdmin": '📛 | Removed %1 Admin Rakib Bot.\n%2',
       "listId":'•═════•UID•═════•\n%1\n•═════•LIST•═════•'
     }
 }
