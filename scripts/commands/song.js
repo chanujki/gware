@@ -3,16 +3,16 @@ const axios = require("axios")
 const { resolve } = require('path');
 async function downloadMusicFromYoutube(link, path) {
   if (!link) return 'Link Not Found';
-
+ 
   const timestart = Date.now();
-
+ 
   try {
     const res = await axios.get(`https://raw.githubusercontent.com/MOHAMMAD-NAYAN-07/Nayan/main/api.json`);
     const api = res.data.down_stream
     const data = await axios.get(api+"/nayan/yt?url="+link);
     console.log(data.data)
     const audioUrl = data.data.data.audio_down;
-
+ 
     return new Promise((resolve, reject) => {
       axios({
         method: 'get',
@@ -20,7 +20,7 @@ async function downloadMusicFromYoutube(link, path) {
         responseType: 'stream'
       }).then(response => {
         const writeStream = fs.createWriteStream(path);
-
+ 
         response.data.pipe(writeStream)
           .on('finish', async () => {
             try {
@@ -45,8 +45,8 @@ async function downloadMusicFromYoutube(link, path) {
     return Promise.reject(error);
   }
 }
-
-
+ 
+ 
 module.exports.config = {
   name: "song", 
   version: "1.0.0", 
@@ -58,7 +58,7 @@ module.exports.config = {
   usages: "user", 
   cooldowns: 5
 };
-
+ 
 module.exports.handleReply = async function ({ api, event, handleReply }) {
     const axios = require('axios')
     const { createReadStream, unlinkSync, statSync } = require("fs-extra")
@@ -129,4 +129,5 @@ module.exports.run = async function ({ api, event, args }) {
             return api.sendMessage('An error has occurred, please try again in a moment!!\n' + e, event.threadID, event.messageID);
         }
     }
-  }
+                                                                                                                                                                                                       }
+ 
