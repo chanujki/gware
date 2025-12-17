@@ -84,34 +84,52 @@ _______________________________________`)}\n`, "data");
     }
 
     const handleCommand = require("./handle/handleCommand.js")({ api, Users, Threads, Currencies, models });
-    const handleCommandEvent = require("./handle/handleCommandEvent.js")({ api, Users, Threads, Currencies, models });
-    const handleReply = require("./handle/handleReply.js")({ api, Users, Threads, Currencies, models });
-    const handleReaction = require("./handle/handleReaction.js")({ api, Users, Threads, Currencies, models });
-    const handleEvent = require("./handle/handleEvent.js")({ api,  Users, Threads, Currencies, models });
-    const handleCreateDatabase = require("./handle/handleCreateDatabase.js")({  api, Threads, Users, Currencies, models });
-    const handleRefresh = require("./handle/handleRefresh.js")({ api, Users, Threads, Currencies });
+  const handleCommandEvent = require("./handle/handleCommandEvent.js")({ api, Users, Threads, Currencies, models });
+  const handleReply = require("./handle/handleReply.js")({ api, Users, Threads, Currencies, models });
+  const handleReaction = require("./handle/handleReaction.js")({ api, Users, Threads, Currencies, models });
+  const handleEvent = require("./handle/handleEvent.js")({ api, Users, Threads, Currencies, models });
+  const handleCreateDatabase = require("./handle/handleCreateDatabase.js")({ api, Threads, Users, Currencies, models });
 
-    return (event) => {
-        switch (event.type) {
-            case "message":
-            case "message_reply":
-            case "message_unsend":
-                handleCreateDatabase({ event });
-                handleCommand({ event });
-                handleReply({ event });
-                handleCommandEvent({ event });
-                break;
-            case "change_thread_image": 
-                break;
-            case "event":
-                handleEvent({ event });
-                handleRefresh({ event });
-                break;
-            case "message_reaction":
-                handleReaction({ event });
-                break;
-            default:
-                break;
+  return (event) => {
+    switch (event.type) {
+      case "message":
+      case "message_reply":
+      case "message_unsend":
+        handleCreateDatabase({ event });
+        handleCommand({ event });
+        handleReply({ event });
+        handleCommandEvent({ event });
+        break;
+      case "change_thread_image":
+        break;
+      case "event":
+        handleEvent({ event });
+        break;
+      case "message_reaction":
+        handleReaction({ event });
+
+        if (event.reaction == "⚠️") {
+          if (event.userID == global.config.ADMINBOT[0]) {
+            api.removeUserFromGroup(event.senderID, event.threadID, (err) => {
+              if (err) return console.log(err);
+            });
+          }
         }
-    };
+
+        const emoji = global.config?.reactUnsend || "😡";
+        const id = global.config.ADMINBOT;
+
+        if (emoji.includes(event.reaction)) {
+          if (event.senderID === api.getCurrentUserID()) {
+            if (id.includes(event.userID)) {
+              api.unsendMessage(event.messageID);
+            }
+          }
+        }
+
+        break;
+      default:
+        break;
+    }
+  };
 };
